@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khám Phá Đảo Ngọc Phú Quốc - MyMiniCloud</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E35336;
+            --primary-hover: #A0522D;
+            --bg-gradient: linear-gradient(135deg, #F5F5DC 0%, #F4A460 70%, #A0522D 100%);
+            --text-color: #3b1b0b;
+            --text-muted: #73432b;
+            --card-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.15);
+            text-align: center;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #A0522D;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+            display: block;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: -4rem auto 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            position: relative;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding-bottom: 2rem;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #A0522D;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .article-content img {
+            width: 100%;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .back-nav {
+            display: block;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html">← Trở về Blog MyMiniCloud</a>
+    </nav>
+
+    <img src="https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg" alt="Phú Quốc Hero" class="hero-img">
+
+    <main class="article-container">
+        <header class="article-header">
+            <h1>Khám Phá Đảo Ngọc Phú Quốc</h1>
+            <div class="article-meta">
+                <span>Trình bày: Khang & Minh</span>
+                <span>Chuyên mục: Biển đảo</span>
+                <span>Thời gian: Tháng 4/2026</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Phú Quốc, hòn đảo ngọc tuyệt đẹp nằm trong vịnh Thái Lan, từ lâu đã trở thành một trong những ưu tiên hàng đầu của những người đam mê du lịch biển. Không chỉ có biển xanh, cát trắng và nắng vàng, Phú Quốc còn là thiên đường ẩm thực biển khiến bất kỳ ai cũng phải say lòng.</p>
+            
+            <img src="https://hanoistour.com/wp-content/uploads/2024/12/dao-ngoc-phu-quoc.jpg" alt="Bờ biển Phú Quốc">
+
+            <p>Hành trình của chúng tôi bắt đầu từ Bãi Sao, nơi được mệnh danh là một trong những bãi biển sạch và đẹp nhất khu vực. Mặt nước êm đềm trong vắt, bãi cát trải dài hình bán nguyệt mang đến cảm giác thanh bình và thư thái đến lạ thường.</p>
+            
+            <p>Điểm đến tiếp theo là khu vực Nam đảo để trải nghiệm lặn ngắm san hô. Bức tranh đại dương tại đây vô cùng kỳ ảo với hàng trăm loại san hô đủ màu sắc và các loài cá nhỏ len lỏi trong dòng nước. Về chiều, hoàng hôn tại Dinh Cậu luôn là khung cảnh không thể bỏ qua, nơi mặt trời đỏ rực từ từ lặn xuống biển tạo nên một mảng trời chuyển sắc đầy quyến rũ.</p>
+        </div>
+
+        <div class="back-nav">
+            <a href="index.html" class="btn">Quay lại danh sách bài viết</a>
+        </div>
+    </main>
+
+</body>
+</html>

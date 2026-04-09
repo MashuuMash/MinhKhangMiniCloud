@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đà Nẵng - Thành Phố Đáng Sống - MyMiniCloud</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E35336;
+            --primary-hover: #A0522D;
+            --bg-gradient: linear-gradient(135deg, #F5F5DC 0%, #F4A460 70%, #A0522D 100%);
+            --text-color: #3b1b0b;
+            --text-muted: #73432b;
+            --card-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding: 1.5rem;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.15);
+            text-align: center;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #A0522D;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+            display: block;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: -4rem auto 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(160, 82, 45, 0.2);
+            position: relative;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding-bottom: 2rem;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #A0522D;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .article-content img {
+            width: 100%;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .back-nav {
+            display: block;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html">← Trở về Blog MyMiniCloud</a>
+    </nav>
+
+    <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Đà Nẵng Hero" class="hero-img">
+
+    <main class="article-container">
+        <header class="article-header">
+            <h1>Đà Nẵng - Thành Phố Đáng Sống</h1>
+            <div class="article-meta">
+                <span>Trình bày: Khang & Minh</span>
+                <span>Chuyên mục: Thành phố</span>
+                <span>Thời gian: Tháng 4/2026</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Đà Nẵng luôn sở hữu một sức hút kỳ lạ với khách du lịch. Không ồn ào và vội vã như những đô thị lớn khác, Đà Nẵng mang trong mình vẻ đẹp hiện đại nhưng vẫn giữ được sự bình yên vốn có. Con người nơi đây nồng hậu, môi trường trong lành và tiện ích xã hội phát triển đã làm nên danh hiệu "Thành phố đáng sống".</p>
+            
+            <img src="https://nads.1cdn.vn/2025/01/10/W_ban-chieu7.jpg" alt="Cầu Vàng Bà Nà Hills">
+
+            <p>Bước chân lên Bà Nà Hills, chúng tôi không khỏi choáng ngợp trước kiến trúc Cầu Vàng nổi tiếng thế giới. Hai bàn tay rêu phong khổng lồ nâng đỡ dải lụa vàng lấp lánh giữa mây mù tạo nên một khung cảnh siêu thực mà bạn chỉ có thể tin khi tự mình chiêm ngưỡng.</p>
+            
+            <p>Và dĩ nhiên, đã tới Đà Nẵng thì không thể bỏ qua bán đảo Sơn Trà và bãi biển Mỹ Khê - một trong những bãi biển quyến rũ nhất hành tinh. Những quán hải sản dọc bờ biển sẽ cung cấp cho bạn một buổi tối tuyệt vời với những món ốc, tôm, mực ngọt lịm từ biển khơi.</p>
+        </div>
+
+        <div class="back-nav">
+            <a href="index.html" class="btn">Quay lại danh sách bài viết</a>
+        </div>
+    </main>
+
+</body>
+</html>

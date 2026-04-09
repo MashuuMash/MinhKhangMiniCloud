@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMiniCloud Blog - Khám Phá Việt Nam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E35336;
+            --primary-hover: #A0522D;
+            --bg-gradient: linear-gradient(135deg, #F5F5DC 0%, #F4A460 70%, #A0522D 100%);
+            --text-color: #3b1b0b;
+            --text-muted: #73432b;
+            --card-bg: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding: 2rem 0;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.15);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #A0522D;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-excerpt {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(227, 83, 54, 0.2);
+            padding-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem auto;
+            text-align: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--primary-hover);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(227, 83, 54, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>MyMiniCloud Blog</h1>
+            <p>Trải nghiệm Du Lịch Khắp Việt Nam cùng Khang & Minh</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="grid">
+            <!-- Blog 1 -->
+            <a href="blog1.html" class="card">
+                <img src="https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg" alt="Phú Quốc" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Khám Phá Đảo Ngọc Phú Quốc</h2>
+                    <p class="card-excerpt">Hành trình trải nghiệm mùa hè bất tận tại hòn đảo lớn nhất Việt Nam với những bãi biển cát trắng mịn và hải sản tươi ngon.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">5 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 2 -->
+            <a href="blog2.html" class="card">
+                <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Đà Nẵng" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Đà Nẵng - Thành Phố Đáng Sống</h2>
+                    <p class="card-excerpt">Dạo bước trên cầu Vàng, thưởng thức hải sản ven biển Mỹ Khê và cảm nhận nhịp sống vô cùng văn minh của thành phố miền Trung.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">4 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 3 -->
+            <a href="blog3.html" class="card">
+                <img src="https://ticotravel.com.vn/wp-content/uploads/2022/11/sapa-1.jpg" alt="Sapa" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Chinh Phục Sapa Trong Sương</h2>
+                    <p class="card-excerpt">Chuyến đi lên đỉnh Fansipan, chiêm ngưỡng ruộng bậc thang xanh mướt và thưởng thức văn hóa ẩm thực độc đáo vùng Tây Bắc.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">6 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 4 -->
+            <a href="blog4.html" class="card">
+                <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vịnh Hạ Long" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Vịnh Hạ Long - Kỳ Quan Kì Vĩ</h2>
+                    <p class="card-excerpt">Thăm Vịnh Hạ Long trên du thuyền, ngắm nhìn hoàng hôn rực rỡ và những hang động thạch nhũ hàng triệu năm tuổi.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">3 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-link">Quay Về Trang Chủ Hệ Thống</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 MyMiniCloud - Khang & Minh. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
