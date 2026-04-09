@@ -1,3 +1,208 @@
-<h1>MyMiniCloud – Home</h1>
-<p>Chao mung moi nguoi da den voi trang web cua <b>PhamNguyenDuyKhang (523H0039)</b> va <b>TranVuNhatMinh (523H0055)</b>.</p>
-<a href="/blog/">Den trang blog</a>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMiniCloud - Khám Phá Việt Nam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E35336;
+            --primary-hover: #A0522D;
+            --bg-gradient: linear-gradient(135deg, #F5F5DC 0%, #F4A460 70%, #A0522D 100%);
+            --text-color: #3b1b0b;
+            --text-muted: #73432b;
+            --card-bg: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(227, 83, 54, 0.2);
+            padding: 2rem 0;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.15);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #A0522D;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(160, 82, 45, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-excerpt {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(227, 83, 54, 0.2);
+            padding-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(227, 83, 54, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>MyMiniCloud System</h1>
+            <p>Chào mừng bạn đến với Cloud của Khang & Minh</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section style="margin-bottom: 3rem; text-align: center;">
+            <h2 style="margin-bottom: 1rem;">Blog Du Lịch Việt Nam</h2>
+            <p>Khám phá những vùng đất mới cùng chúng mình nhé!</p>
+        </section>
+
+        <div class="grid">
+            <!-- Blog 1 -->
+            <a href="blog/blog1.html" class="card">
+                <img src="https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg" alt="Phú Quốc" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Khám Phá Đảo Ngọc Phú Quốc</h2>
+                    <p class="card-excerpt">Hành trình trải nghiệm mùa hè bất tận tại hòn đảo lớn nhất Việt Nam.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">5 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 2 -->
+            <a href="blog/blog2.html" class="card">
+                <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Đà Nẵng" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Đà Nẵng - Thành Phố Đáng Sống</h2>
+                    <p class="card-excerpt">Dạo bước trên cầu Vàng và cảm nhận nhịp sống văn minh của miền Trung.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">4 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 3 -->
+            <a href="blog/blog3.html" class="card">
+                <img src="https://ticotravel.com.vn/wp-content/uploads/2022/11/sapa-1.jpg" alt="Sapa" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Chinh Phục Sapa Trong Sương</h2>
+                    <p class="card-excerpt">Chuyến đi lên đỉnh Fansipan và chiêm ngưỡng ruộng bậc thang xanh mướt.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">6 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog 4 -->
+            <a href="blog/blog4.html" class="card">
+                <img src="https://images.unsplash.com/photo-1528127269322-539801943592?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vịnh Hạ Long" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">Vịnh Hạ Long - Kỳ Quan Kì Vĩ</h2>
+                    <p class="card-excerpt">Thăm Vịnh Hạ Long trên du thuyền, ngắm nhìn hoàng hôn rực rỡ.</p>
+                    <div class="card-footer">
+                        <span>Đọc tiếp →</span>
+                        <span style="color: var(--text-muted)">3 phút đọc</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 MyMiniCloud - Khang & Minh. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
