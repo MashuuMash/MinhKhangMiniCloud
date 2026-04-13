@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "student_id": "523H0039",
+    "name": "Pham Nguyen Duy Khang",
+    "major": "Software Engineering",
+    "gpa": 8.5
+  },
+  {
+    "id": 2,
+    "student_id": "523H0055",
+    "name": "Tran Vu Nhat Minh",
+    "major": "Software Engineering",
+    "gpa": 8.6
+  },
+  {
+    "id": 3,
+    "student_id": "523H0000",
+    "name": "Nguyen Van A",
+    "major": "Software Engineering",
+    "gpa": 7.5
+  }
+]

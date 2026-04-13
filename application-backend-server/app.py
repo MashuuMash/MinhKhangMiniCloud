@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import time, requests, os
+import time, requests, os, json
 from jose import jwt
 
 # Các biến môi trường cho Auth Server (Keycloak)
@@ -24,6 +24,15 @@ app = Flask(__name__)
 @app.get("/hello")
 def hello(): 
     return jsonify(message="Hello from App Server!", members=["Khang", "Minh"])
+
+@app.get("/student")
+def get_students():
+    try:
+        with open("students.json", "r") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 @app.get("/secure")
 def secure():

@@ -9,5 +9,7 @@ $TTL 1H
     )
 @   IN NS   ns.cloud.local.
 ns  IN A    127.0.0.1
-web-frontend-server IN A 10.10.10.10
-application-backend-server IN A 10.10.10.20
+app-backend IN A 10.10.10.20
+web-frontend IN A 10.10.10.10
+minio IN A 10.10.10.30
+keycloak IN A 10.10.10.40

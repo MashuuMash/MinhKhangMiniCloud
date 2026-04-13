@@ -6,14 +6,20 @@ networks:
     driver: bridge
 
 services:
-  # 1. Web Frontend Server
-  web-frontend-server:
+  # 1. Web Frontend Server 1
+  web-frontend-server1:
     build: ./web-frontend-server
-    container_name: web-frontend-server
+    container_name: web-frontend-server1
     networks:
       - cloud-net
-    ports:
-      - "8080:80"
+    restart: unless-stopped
+
+  # 1.1 Web Frontend Server 2
+  web-frontend-server2:
+    build: ./web-frontend-server
+    container_name: web-frontend-server2
+    networks:
+      - cloud-net
     restart: unless-stopped
 
   # 2. Application Backend Server
@@ -25,7 +31,7 @@ services:
     ports:
       - "8085:8081"
     environment:
-      OIDC_ISSUER: "http://authentication-identity-server:8080/realms/master"
+      OIDC_ISSUER: "http://authentication-identity-server:8080/realms/realm_523H0039"
       OIDC_AUDIENCE: "myapp"
     restart: unless-stopped
 
@@ -70,7 +76,7 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     volumes:
-      - ./object-storage-server/data:/data
+      - minio_data:/data
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -130,7 +136,8 @@ services:
     image: nginx:stable
     container_name: api-gateway-proxy-server
     depends_on:
-      - web-frontend-server
+      - web-frontend-server1
+      - web-frontend-server2
       - application-backend-server
       - authentication-identity-server
     ports:
@@ -140,3 +147,6 @@ services:
     networks:
       - cloud-net
     restart: unless-stopped
+
+volumes:
+  minio_data:
