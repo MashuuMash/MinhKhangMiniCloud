@@ -7,6 +7,12 @@ server {
 
   location / { try_files $uri $uri/ =404; }
 
+  # Thêm mục này cho Prometheus giám sát (Trả về metric giả lập để báo UP)
+  location /metrics {
+    default_type text/plain;
+    return 200 "nginx_up 1\n";
+  }
+
   location ^~ /blog/ {
     alias /usr/share/nginx/html/blog/;
     index index.html;

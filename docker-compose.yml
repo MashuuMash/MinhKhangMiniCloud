@@ -10,6 +10,8 @@ services:
   web-frontend-server1:
     build: ./web-frontend-server
     container_name: web-frontend-server1
+    ports:
+      - "8080:80"
     networks:
       - cloud-net
     restart: unless-stopped
@@ -18,6 +20,8 @@ services:
   web-frontend-server2:
     build: ./web-frontend-server
     container_name: web-frontend-server2
+    ports:
+      - "8082:80"
     networks:
       - cloud-net
     restart: unless-stopped
@@ -31,7 +35,7 @@ services:
     ports:
       - "8085:8081"
     environment:
-      OIDC_ISSUER: "http://localhost:8081/realms/realm_minicloud"
+      OIDC_ISSUER: "http://${PUBLIC_IP:-localhost}:8081/realms/realm_minicloud"
       OIDC_AUDIENCE: "account"
     restart: unless-stopped
 
@@ -58,7 +62,7 @@ services:
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-      KC_HOSTNAME: "localhost"
+      KC_HOSTNAME: "${PUBLIC_IP:-localhost}"
       KC_HOSTNAME_STRICT: "false"
       KC_HTTP_ENABLED: "true"
     ports:
@@ -125,6 +129,8 @@ services:
   monitoring-grafana-dashboard-server:
     image: grafana/grafana:latest
     container_name: monitoring-grafana-dashboard-server
+    volumes:
+      - ./monitoring-grafana-dashboard-server/provisioning:/etc/grafana/provisioning:ro
     ports:
       - "3000:3000"
     networks:
