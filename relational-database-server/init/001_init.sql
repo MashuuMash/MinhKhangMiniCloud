@@ -19,4 +19,6 @@ CREATE TABLE IF NOT EXISTS students (
 INSERT INTO students (student_id, full_name, major, gpa) VALUES
   ('523H0039', 'Pham Nguyen Duy Khang', 'Software Engineering', 8.50),
   ('523H0055', 'Tran Vu Nhat Minh', 'Software Engineering', 8.60),
-  ('523H0000', 'Nguyen Van A', 'Software Engineering', 7.50);
+  ('523H0000', 'Nguyen Van A', 'Computer Science', 7.50),
+  ('523H0001', 'Nguyen Van B', 'Information Technology', 9.50),
+  ('523H0002', 'Nguyen Van C', 'Data Science', 8.90);

@@ -17,7 +17,21 @@
     "id": 3,
     "student_id": "523H0000",
     "name": "Nguyen Van A",
-    "major": "Software Engineering",
+    "major": "Computer Science",
     "gpa": 7.5
+  },
+  {
+    "id": 4,
+    "student_id": "523H0001",
+    "name": "Nguyen Van B",
+    "major": "Information Technology",
+    "gpa": 9.5
+  },
+  {
+    "id": 5,
+    "student_id": "523H0002",
+    "name": "Nguyen Van C",
+    "major": "Data Science",
+    "gpa": 8.9
   }
 ]

@@ -1,0 +1,24 @@
+# Danh sách công việc - MyMiniCloud Project
+
+## GIAI ĐOẠN 1: THIẾT LẬP CƠ BẢN (5 ĐIỂM)
+- [x] Khởi tạo cấu trúc thư mục `KhangMinhMiniCloudDemo`
+- [x] Triển khai Web Frontend Server (Basic)
+- [x] Triển khai Application Backend Server (Basic)
+- [x] Triển khai Relational Database Server (Basic)
+- [] Triển khai Internal DNS Server (Basic)
+- [] Triển khai Monitoring Prometheus Server (Basic)
+- [] Triển khai API Gateway Proxy Server (Basic)
+- [] Xây dựng file `docker-compose.yml` tổng thể
+- [] Khởi động hệ thống và kiểm tra thông mạng (Ping/Curl)
+- [] **NHẮC USER CHỤP ẢNH DEMO PHẦN CƠ BẢN**
+
+## GIAI ĐOẠN 2: TÙY BIẾN MỞ RỘNG (5 ĐIỂM)
+- [] Web: Thiết lập khung Blog (4 bài viết du lịch)
+- [] App: Thêm API `/student` trả về JSON sinh viên
+- [] DB: Tạo CSDL `studentdb` và bảng `students`
+- [] Auth: Cấu hình Realm/Client trên Keycloak UI (Cần thao tác UI)
+- [] Storage: Tạo Bucket trên MinIO UI (Cần thao tác UI)
+- [] DNS: Thêm các bản ghi A mở rộng (web1, web2, app, auth, minio)
+- [] Prometheus: Thêm target giám sát Web Server 1 & 2
+- [] Grafana: Tạo Dashboard System Health (Cần thao tác UI)
+- [] Proxy: Cấu hình Route `/student/` và Load Balancing (Round Robin)
