@@ -31,8 +31,8 @@ services:
     ports:
       - "8085:8081"
     environment:
-      OIDC_ISSUER: "http://authentication-identity-server:8080/realms/realm_523H0039"
-      OIDC_AUDIENCE: "myapp"
+      OIDC_ISSUER: "http://localhost:8081/realms/realm_minicloud"
+      OIDC_AUDIENCE: "account"
     restart: unless-stopped
 
   # 3. Relational Database Server

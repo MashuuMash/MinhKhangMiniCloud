@@ -12,9 +12,9 @@ DB_CONFIG = {
 }
 
 # Các biến môi trường cho Auth Server (Keycloak)
-ISSUER   = os.getenv("OIDC_ISSUER",   "http://authentication-identity-server:8080/realms/master")
-AUDIENCE = os.getenv("OIDC_AUDIENCE", "myapp")
-JWKS_URL = f"{ISSUER}/protocol/openid-connect/certs"
+ISSUER   = os.getenv("OIDC_ISSUER",   "http://localhost:8081/realms/realm_minicloud")
+AUDIENCE = os.getenv("OIDC_AUDIENCE", "account")
+JWKS_URL = os.getenv("OIDC_JWKS_URL", "http://authentication-identity-server:8080/realms/realm_minicloud/protocol/openid-connect/certs")
 
 _JWKS = None; _TS = 0
 def get_jwks():
