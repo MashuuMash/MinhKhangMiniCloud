@@ -19,7 +19,7 @@ echo "Hệ thống đang triển khai tại Public IP: $PUBLIC_IP"
 
 # 4. Tải mã nguồn từ GitHub
 cd /home/ubuntu
-git clone https://github.com/MashuuMash/MinhKhangMiniCloud.git project
+git clone -b minh-test https://github.com/MashuuMash/MinhKhangMiniCloud.git project
 cd project
 
 # 5. Khởi chạy toàn bộ hệ thống bằng Docker Compose
