@@ -107,6 +107,32 @@ COMMON_STYLE = """
     .btn-add:hover { background: var(--primary-hover); transform: translateY(-2px); }
     .btn-del { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
     .btn-del:hover { background: var(--danger); color: white; }
+    .btn-edit { background: rgba(16, 185, 129, 0.1); color: var(--primary); border: 1px solid var(--primary); margin-right: 5px; }
+    .btn-edit:hover { background: var(--primary); color: white; }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0; top: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.8);
+        backdrop-filter: blur(5px);
+    }
+    .modal-content {
+        background: var(--bg-color);
+        margin: 10% auto;
+        padding: 40px;
+        border: 1px solid var(--primary);
+        border-radius: 20px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    }
+    .modal-header { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+    .modal-header h2 { color: var(--primary); }
+    .modal-body .form-grid { grid-template-columns: 1fr; gap: 20px; }
+    .modal-footer { margin-top: 30px; display: flex; justify-content: flex-end; gap: 10px; }
 
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     th { text-align: left; padding: 15px; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; }
@@ -159,7 +185,7 @@ def students_db_page():
 
                 <div class="form-box">
                     <form action="/api/students-db/add" method="POST" class="form-grid">
-                        <input type="text" name="student_id" placeholder="MSSV (VD: 523H...)" required>
+                        <input type="text" name="student_id" placeholder="MSSV" required>
                         <input type="text" name="full_name" placeholder="Họ và tên" required>
                         <input type="text" name="major" placeholder="Chuyên ngành" required>
                         <input type="number" step="0.01" name="gpa" placeholder="GPA" required>
@@ -180,7 +206,8 @@ def students_db_page():
                             <td>{{ s.full_name }}</td>
                             <td>{{ s.major }}</td>
                             <td><span class="gpa-badge">{{ s.gpa }}</span></td>
-                            <td>
+                            <td style="display: flex;">
+                                <button class="btn btn-edit" onclick="openEditModal('{{ s.id }}', '{{ s.student_id }}', '{{ s.full_name }}', '{{ s.major }}', '{{ s.gpa }}')">Sửa</button>
                                 <form action="/api/students-db/delete/{{ s.id }}" method="POST">
                                     <button type="submit" class="btn btn-del" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
                                 </form>
@@ -190,6 +217,46 @@ def students_db_page():
                     </tbody>
                 </table>
             </div>
+
+            <!-- Edit Modal -->
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Chỉnh sửa thông tin</h2>
+                    </div>
+                    <form id="editForm" method="POST">
+                        <div class="modal-body">
+                            <div class="form-grid">
+                                <input type="text" id="edit-student-id" name="student_id" placeholder="MSSV" required>
+                                <input type="text" id="edit-full-name" name="full_name" placeholder="Họ và tên" required>
+                                <input type="text" id="edit-major" name="major" placeholder="Chuyên ngành" required>
+                                <input type="number" step="0.01" id="edit-gpa" name="gpa" placeholder="GPA" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-del" onclick="closeEditModal()">Hủy</button>
+                            <button type="submit" class="btn btn-add">Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                function openEditModal(id, stuid, name, major, gpa) {
+                    document.getElementById('editForm').action = '/api/students-db/update/' + id;
+                    document.getElementById('edit-student-id').value = stuid;
+                    document.getElementById('edit-full-name').value = name;
+                    document.getElementById('edit-major').value = major;
+                    document.getElementById('edit-gpa').value = gpa;
+                    document.getElementById('editModal').style.display = 'block';
+                }
+                function closeEditModal() {
+                    document.getElementById('editModal').style.display = 'none';
+                }
+                window.onclick = function(event) {
+                    if (event.target == document.getElementById('editModal')) closeEditModal();
+                }
+            </script>
         </body>
         </html>
         """
@@ -211,6 +278,21 @@ def add_student_db():
         return redirect("/api/students-db")
     except Exception as e:
         return f"Lỗi khi thêm: {str(e)}", 500
+
+@app.post("/api/students-db/update/<int:id>")
+def update_student_db(id):
+    try:
+        data = request.form
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        query = "UPDATE students SET student_id=%s, full_name=%s, major=%s, gpa=%s WHERE id=%s"
+        cursor.execute(query, (data['student_id'], data['full_name'], data['major'], data['gpa'], id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect("/api/students-db")
+    except Exception as e:
+        return f"Lỗi khi cập nhật: {str(e)}", 500
 
 @app.post("/api/students-db/delete/<int:id>")
 def delete_student_db(id):
