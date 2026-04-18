@@ -1,5 +1,5 @@
 import mysql.connector
-from flask import Flask, jsonify, request, render_template_string
+from flask import Flask, jsonify, request, render_template_string, redirect, url_for
 import time, requests, os, json
 from jose import jwt
 
@@ -30,13 +30,97 @@ def get_jwks():
 
 app = Flask(__name__)
 
+# CSS Chung cho các trang Dashboard
+COMMON_STYLE = """
+<style>
+    :root {
+        --bg-color: #0f172a;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --primary: #10b981;
+        --primary-hover: #059669;
+        --danger: #ef4444;
+        --text-main: #f8fafc;
+        --text-secondary: #94a3b8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+        background: radial-gradient(circle at top right, #1e293b, #0f172a);
+        color: var(--text-main);
+        padding: 40px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        width: 100%;
+        max-width: 1100px;
+        background: var(--card-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+    }
+    .header h1 { font-size: 2rem; color: var(--primary); font-weight: 800; letter-spacing: -0.025em; }
+    
+    /* Form Styles */
+    .form-box {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        border: 1px dashed rgba(16, 185, 129, 0.3);
+    }
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+    input {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 12px 15px;
+        border-radius: 8px;
+        color: white;
+        font-size: 0.9rem;
+    }
+    input:focus { outline: none; border-color: var(--primary); }
+    .btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        font-size: 0.9rem;
+    }
+    .btn-add { background: var(--primary); color: #000; }
+    .btn-add:hover { background: var(--primary-hover); transform: translateY(-2px); }
+    .btn-del { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
+    .btn-del:hover { background: var(--danger); color: white; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th { text-align: left; padding: 15px; color: var(--text-secondary); font-size: 0.85rem; text-transform: uppercase; }
+    td { padding: 20px 15px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+    .gpa-badge { background: var(--primary); color: #000; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+</style>
+"""
+
+def get_db_connection():
+    return mysql.connector.connect(**DB_CONFIG)
+
 @app.get("/hello")
 def hello(): 
     return jsonify(message="Hello from App Server!", members=["Khang", "Minh"])
-
-# Helper to get DB connection
-def get_db_connection():
-    return mysql.connector.connect(**DB_CONFIG)
 
 @app.get("/student")
 def get_students():
@@ -47,149 +131,148 @@ def get_students():
     except Exception as e:
         return jsonify(error=str(e)), 500
 
-@app.get("/api/students-db")
+# Route cho MariaDB CRUD
+@app.route("/api/students-db", methods=["GET"])
 def students_db_page():
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM students")
+        cursor.execute("SELECT * FROM students ORDER BY id DESC")
         students = cursor.fetchall()
         cursor.close()
         conn.close()
 
-        # Emerald Green Dashboard Template
         html_template = """
         <!DOCTYPE html>
         <html lang="vi">
         <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Student Management - MariaDB</title>
-            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-            <style>
-                :root {
-                    --bg-color: #121212;
-                    --card-bg: rgba(255, 255, 255, 0.05);
-                    --primary: #10b981;
-                    --primary-hover: #059669;
-                    --text-main: #f3f4f6;
-                    --text-secondary: #9ca3af;
-                }
-                * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-                body {
-                    background-color: var(--bg-color);
-                    color: var(--text-main);
-                    padding: 40px 20px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    min-height: 100vh;
-                }
-                .container {
-                    width: 100%;
-                    max-width: 1000px;
-                    background: var(--card-bg);
-                    backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 16px;
-                    padding: 30px;
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-                }
-                .header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 30px;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                    padding-bottom: 20px;
-                }
-                .header h1 { font-size: 1.8rem; color: var(--primary); font-weight: 700; }
-                .status-badge {
-                    background: rgba(16, 185, 129, 0.1);
-                    color: var(--primary);
-                    padding: 6px 12px;
-                    border-radius: 20px;
-                    font-size: 0.85rem;
-                    font-weight: 500;
-                    border: 1px solid var(--primary);
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 10px;
-                }
-                th {
-                    text-align: left;
-                    padding: 15px;
-                    color: var(--text-secondary);
-                    font-weight: 600;
-                    font-size: 0.9rem;
-                    text-transform: uppercase;
-                    letter-spacing: 0.05em;
-                }
-                td {
-                    padding: 18px 15px;
-                    border-top: 1px solid rgba(255, 255, 255, 0.05);
-                    font-size: 1rem;
-                }
-                tr:hover td {
-                    background: rgba(255, 255, 255, 0.02);
-                }
-                .student-id { font-family: monospace; font-size: 1.1rem; color: var(--primary); }
-                .gpa-badge {
-                    background: var(--primary);
-                    color: #000;
-                    padding: 2px 8px;
-                    border-radius: 6px;
-                    font-weight: 700;
-                    font-size: 0.9rem;
-                }
-                .footer {
-                    margin-top: 30px;
-                    text-align: center;
-                    color: var(--text-secondary);
-                    font-size: 0.85rem;
-                }
-            </style>
+            <meta charset="UTF-8"><title>MariaDB CRUD - MyMiniCloud</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+            """ + COMMON_STYLE + """
         </head>
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>Danh sách sinh viên (MariaDB)</h1>
-                    <div class="status-badge">Connected: relational-database-server</div>
+                    <h1>Quản lý Sinh viên (MariaDB)</h1>
+                    <a href="/" style="color: var(--text-secondary); text-decoration: none;">← Quay lại</a>
                 </div>
+
+                <div class="form-box">
+                    <form action="/api/students-db/add" method="POST" class="form-grid">
+                        <input type="text" name="student_id" placeholder="MSSV (VD: 523H...)" required>
+                        <input type="text" name="full_name" placeholder="Họ và tên" required>
+                        <input type="text" name="major" placeholder="Chuyên ngành" required>
+                        <input type="number" step="0.01" name="gpa" placeholder="GPA" required>
+                        <button type="submit" class="btn btn-add">Thêm sinh viên</button>
+                    </form>
+                </div>
+
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Mã sinh viên</th>
-                            <th>Họ và tên</th>
-                            <th>Chuyên ngành</th>
-                            <th>GPA</th>
+                            <th>Mã SV</th><th>Họ và tên</th><th>Chuyên ngành</th><th>GPA</th><th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for s in students %}
                         <tr>
-                            <td>{{ loop.index }}</td>
-                            <td><span class="student-id">{{ s.student_id }}</span></td>
+                            <td style="font-family: monospace; color: var(--primary); font-weight: 600;">{{ s.student_id }}</td>
                             <td>{{ s.full_name }}</td>
                             <td>{{ s.major }}</td>
                             <td><span class="gpa-badge">{{ s.gpa }}</span></td>
+                            <td>
+                                <form action="/api/students-db/delete/{{ s.id }}" method="POST">
+                                    <button type="submit" class="btn btn-del" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                <div class="footer">
-                    &copy; 2026 MyMiniCloud - Khang & Minh. Toàn bộ dữ liệu được truy vấn thực tế từ Cloud Database.
-                </div>
             </div>
         </body>
         </html>
         """
         return render_template_string(html_template, students=students)
     except Exception as e:
-        return f"<h1 style='color:red'>Lỗi hệ thống: {str(e)}</h1>", 500
+        return f"<h1 style='color:red'>Lỗi DB: {str(e)}</h1>", 500
+
+@app.post("/api/students-db/add")
+def add_student_db():
+    try:
+        data = request.form
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        query = "INSERT INTO students (student_id, full_name, major, gpa) VALUES (%s, %s, %s, %s)"
+        cursor.execute(query, (data['student_id'], data['full_name'], data['major'], data['gpa']))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect("/api/students-db")
+    except Exception as e:
+        return f"Lỗi khi thêm: {str(e)}", 500
+
+@app.post("/api/students-db/delete/<int:id>")
+def delete_student_db(id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM students WHERE id = %s", (id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect("/api/students-db")
+    except Exception as e:
+        return f"Lỗi khi xóa: {str(e)}", 500
+
+# Route cho JSON View
+@app.get("/api/students-json")
+def students_json_page():
+    try:
+        with open("students.json", "r") as f:
+            students = json.load(f)
+        
+        html_template = """
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+            <meta charset="UTF-8"><title>JSON View - MyMiniCloud</title>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+            """ + COMMON_STYLE + """
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Danh sách Sinh viên (Local JSON)</h1>
+                    <a href="/" style="color: var(--text-secondary); text-decoration: none;">← Quay lại</a>
+                </div>
+
+                <p style="margin-bottom: 20px; color: var(--text-secondary);">Dữ liệu được đọc trực tiếp từ tệp <code>students.json</code> trong container.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã SV</th><th>Họ và tên</th><th>Chuyên ngành</th><th>GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td style="font-family: monospace; color: var(--primary); font-weight: 600;">{{ s.student_id }}</td>
+                            <td>{{ s.name }}</td>
+                            <td>{{ s.major }}</td>
+                            <td><span class="gpa-badge">{{ s.gpa }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </body>
+        </html>
+        """
+        return render_template_string(html_template, students=students)
+    except Exception as e:
+        return f"<h1 style='color:red'>Lỗi JSON: {str(e)}</h1>", 500
 
 @app.get("/secure")
 def secure():

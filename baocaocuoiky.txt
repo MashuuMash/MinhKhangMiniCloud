@@ -48,13 +48,13 @@ o	restart: unless-stopped
  Ví dụ cấu trúc thư mục dự án
  
 BÁO CÁO CUỐI KỲ PHẢI CÓ
-Phần	Nội dung
-Chương 1. Giới thiệu & mục tiêu	Giải thích hệ thống 9 server, mô hình cloud mô phỏng
-Chương 2. Kiến trúc & sơ đồ	Sơ đồ network, flow request giữa server
-Chương 3. Cấu hình & Dockerfile	Trình bày các Dockerfile, compose, config
-Chương 4. Demo & kiểm thử	Ảnh minh họa mỗi server khi chạy
-Chương 5. Đánh giá & phân tích	Nêu ưu điểm – khó khăn – hướng mở rộng
-Phụ lục	Link Docker Hub, link video demo, log kết quả
+Phần / Nội dung
+Chương 1. Giới thiệu & mục tiêu	/ Giải thích hệ thống 9 server, mô hình cloud mô phỏng
+Chương 2. Kiến trúc & sơ đồ /	Sơ đồ network, flow request giữa server
+Chương 3. Cấu hình & Dockerfile /	Trình bày các Dockerfile, compose, config
+Chương 4. Demo & kiểm thử /	Ảnh minh họa mỗi server khi chạy
+Chương 5. Đánh giá & phân tích / Nêu ưu điểm – khó khăn – hướng mở rộng
+Phụ lục /	Link Docker Hub, link video demo, log kết quả
  
 HƯỚNG DẪN CÁC BƯỚC XÂY DỰNG DỰ ÁN
 Sử dụng bash/cmd/powershell để thực hiện tạo dự án

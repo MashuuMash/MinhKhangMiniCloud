@@ -128,9 +128,59 @@
             color: var(--text-muted);
             border-top: 1px solid rgba(227, 83, 54, 0.2);
         }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(227, 83, 54, 0.1);
+            padding: 1rem 0;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">MyMiniCloud</a>
+            <div class="nav-links">
+                <a href="/">Trang Chủ</a>
+                <a href="/api/students-db">Student DB (CRUD)</a>
+                <a href="/api/students-json">Student JSON (UI)</a>
+            </div>
+        </div>
+    </nav>
 
     <header class="header">
         <div class="container">
