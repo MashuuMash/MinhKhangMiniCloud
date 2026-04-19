@@ -1,91 +1,71 @@
-# MyMiniCloud: A Distributed Infrastructure Simulation
+# MyMiniCloud: Distributed Infrastructure Simulation
 
-![Status](https://img.shields.io/badge/Status-Deployed-success?style=for-the-badge)
-![Tech](https://img.shields.io/badge/Infrastructure-Docker--Compose-blue?style=for-the-badge&logo=docker)
-![Cloud](https://img.shields.io/badge/Cloud-AWS--EC2-orange?style=for-the-badge&logo=amazon-aws)
-
-**MyMiniCloud** là một dự án mô phỏng hệ thống hạ tầng điện toán đám mây thu nhỏ, được thiết kế và triển khai bởi **Minh & Khang**. Hệ thống bao gồm 10 dịch vụ (microservices) được đóng gói bằng Docker, tích hợp đầy đủ các tính năng của một nền tảng Cloud hiện đại: Xác thực (SSO), Giám sát (Monitoring), Cân bằng tải (Load Balancing) và Lưu trữ đối tượng (Object Storage).
+**MyMiniCloud** là một dự án mô phỏng hạ tầng điện toán đám mây (Cloud Infrastructure) được triển khai trên nền tảng Containerization. Hệ thống bao gồm 9 dịch vụ phối hợp đồng bộ, mô phỏng đầy đủ các thành phần cốt lõi của một hệ thống Cloud hiện đại như Load Balancing, Identity Management (SSO), Object Storage (S3), Internal DNS và hệ thống Observability toàn diện.
 
 ---
 
-## Kiến trúc Hệ thống (System Architecture)
+## 1. Kiến trúc Hệ thống (System Architecture)
 
-Hệ thống được vận hành bởi 10 máy chủ (containers) phối hợp nhịp nhàng:
+Hệ thống được thiết kế theo cấu trục phân tầng nhằm đảm bảo tính sẵn sàng cao (High Availability) và bảo mật dữ liệu:
 
-1.  **API Gateway (Nginx Proxy):** Cửa ngõ duy nhất tiếp nhận request, cân bằng tải và bảo mật hệ thống.
-2.  **Identity Management (Keycloak):** Quản lý định danh và truy cập tập trung (Single Sign-On).
-3.  **Web Frontend Server:** Giao diện điều khiển (Dashboard) hiện đại, trực quan.
-4.  **Application Backend:** Xử lý logic nghiệp vụ, quản lý dữ liệu sinh viên.
-5.  **Relational Database (MariaDB):** Lưu trữ dữ liệu có cấu trúc một cách an toàn.
-6.  **Object Storage (MinIO):** Lưu trữ tệp tin và dữ liệu phi cấu trúc (S3 compatible).
-7.  **Internal DNS Server (Bind9):** Điều phối tên miền nội bộ giữa các dịch vụ.
-8.  **Monitoring (Prometheus):** Thu thập các chỉ số (metrics) hệ thống theo thời gian thực.
-9.  **Visualization (Grafana):** Hệ thống Dashboard biểu diễn dữ liệu giám sát trực quan.
-10. **Mail Server (FakeSMTP):** Mô phỏng dịch vụ gửi email thông báo.
-
----
-
-## Tính năng nổi bật
-
-- **Cloud Native:** Triển khai hoàn toàn trên nền tảng Containerization, sẵn sàng mở rộng.
-- **Full-Stack Monitoring:** Theo dõi sức khỏe hệ thống (CPU, RAM, Network) qua Grafana Dashboard.
-- **Enterprise Security:** Tích hợp Keycloak giúp bảo vệ API và dữ liệu người dùng.
-- **High Availability (Simulation):** Cấu hình Load Balancing qua Nginx để phân phối tải hiệu quả.
-- **One-Click Deploy:** Tự động hóa quá trình cài đặt trên AWS EC2 thông qua Script.
+- **Tầng Gateway:** Nginx đóng vai trò Reverse Proxy và API Gateway, tiếp nhận và điều phối mọi luồng truy cập từ bên ngoài.
+- **Cụm Frontend:** Gồm 3 Node Web Server (Node gốc, Node 1, Node 2) được cấu hình cân bằng tải để chia sẻ lưu lượng truy cập.
+- **Tầng Dịch vụ:** 
+    - Application Backend (Flask): Xử lý các logic nghiệp vụ và cung cấp RESTful API.
+    - Identity Server (Keycloak): Quản lý định danh tập trung và thực hiện xác thực theo chuẩn OIDC.
+- **Tầng Dữ liệu và Lưu trữ:**
+    - Relational Database (MariaDB): Lưu trữ dữ liệu sinh viên có cấu trúc.
+    - Object Storage (MinIO): Cung cấp dịch vụ lưu trữ tệp tin tương thích chuẩn S3.
+- **Hạ tầng và Giám sát:**
+    - Internal DNS (Bind9): Điều phối và ánh xạ tên miền nội bộ giữa các dịch vụ.
+    - Prometheus & Grafana: Thu thập chỉ số hệ thống và hiển thị trực quan qua Dashboard giám sát.
+    - Node Exporter: Thu thập các thông số phần cứng từ host và container.
 
 ---
 
-## Hướng dẫn Triển khai (Deployment Guide)
+## 2. Tính năng nổi bật và Các phần mở rộng đã thực hiện
 
-### 1. Chạy cục bộ (Local Environment)
-Yêu cầu: Đã cài đặt Docker và Docker Compose.
-
-```bash
-# Clone dự án
-git clone -b minh-test https://github.com/MashuuMash/MinhKhangMiniCloud.git project
-cd project
-
-# Khởi chạy hệ thống
-export PUBLIC_IP=localhost
-docker compose up -d
-```
-
-### 2. Triển khai trên AWS EC2 (Cloud Deployment)
-Hệ thống đã được tối ưu hóa cho môi trường AWS:
-
-1.  **Khởi tạo Instance:** Sử dụng Ubuntu 22.04 LTS hoặc 24.04 LTS.
-2.  **Cấu hình Security Group:** Mở các cổng 22, 80, 8081, 8085, 9000-9001, 3000, 9090.
-3.  **Sử dụng Script Tự động:** Copy nội dung setup-cloud.sh vào phần User Data khi Launch máy ảo.
-
-**Lưu ý khi khởi động lại máy AWS:**
-Do IP Public của AWS thay đổi mỗi khi khởi động, bạn cần cập nhật biến môi trường:
-```bash
-sudo PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) docker-compose up -d
-```
+- **Cân bằng tải High Availability:** Sử dụng Nginx với thuật toán Round Robin để phân phối tải qua cụm 3 server frontend.
+- **Xác thực tập trung (SSO):** Triển khai Realm riêng trên Keycloak để quản lý người dùng và cấp phát Token JWT.
+- **Tích hợp API và Database:** Backend hỗ trợ trả dữ liệu từ cả tệp JSON và truy vấn trực tiếp từ MariaDB.
+- **Lưu trữ đối tượng (S3 Storage):** Cấu hình các Bucket chuyên dụng (profile-pics, documents) để quản lý tài nguyên tĩnh.
+- **Định danh dịch vụ (Service Discovery):** Sử dụng hệ thống DNS nội bộ để các dịch vụ giao tiếp qua tên miền .cloud.local thay vì IP.
+- **Giám sát hệ thống (Observability):** Dashboard Grafana tùy chỉnh để theo dõi các chỉ số CPU, RAM và Traffic mạng theo thời gian thực.
 
 ---
 
-## Công nghệ sử dụng (Tech Stack)
+## 3. Công nghệ sử dụng (Tech Stack)
 
-- **Infrastructure:** Docker, Docker Compose, Nginx.
-- **Backend:** Python (Flask), SQLAlchemy.
-- **Frontend:** HTML5, CSS3 (Emerald Green UI), JavaScript.
-- **Database:** MariaDB.
-- **DevOps:** Prometheus, Grafana, Keycloak, MinIO, Bind9.
-- **Cloud:** AWS (EC2).
-
----
-
-## Thành viên thực hiện (Contributors)
-
-| Thành viên | Vai trò |
-| :--- | :--- |
-| **Khang** | Hạ tầng Cloud, Docker, Security (Keycloak) |
-| **Minh** | Backend Development, Monitoring (Prometheus/Grafana) |
+- **Cân bằng tải:** Nginx.
+- **Backend:** Python (Flask).
+- **Cơ sở dữ liệu:** MariaDB.
+- **Bảo mật:** Keycloak.
+- **Lưu trữ:** MinIO.
+- **Hạ tầng mạng:** Bind9 DNS.
+- **Giám sát:** Prometheus, Grafana, Node Exporter.
+- **Nền tảng triển khai:** Docker, Docker Compose, AWS EC2.
 
 ---
 
-## Tài liệu Tham khảo & Bản quyền
-*Dự án được xây dựng cho mục tiêu học tập trong khuôn khổ môn học Điện toán đám mây.*
+## 4. Hướng dẫn Triển khai (Deployment Guide)
 
-Copyright © 2026 Minh & Khang. All rights reserved.
+### Yêu cầu hệ thống
+- Docker và Docker Compose v2 trở lên.
+- Cấu hình Security Group trên máy chủ (mở các cổng: 80, 8081, 8085, 9000-9001, 3000, 9090).
+
+### Các bước khởi chạy
+1. Truy cập vào thư mục gốc của dự án.
+2. Thiết lập biến môi trường IP Public (thay đại diện x.x.x.x bằng IP máy chủ của bạn):
+   `export PUBLIC_IP=x.x.x.x`
+3. Khởi chạy toàn bộ hệ thống bằng Docker Compose:
+   `sudo docker compose up -d`
+4. Kiểm tra trạng thái các container:
+   `sudo docker compose ps`
+
+---
+
+## 5. Thành viên thực hiện (Contributors)
+
+**Nhóm thực hiện: Khang & Minh**
+- **Phạm Nguyễn Duy Khang - 523H0039:** Thiết kế hạ tầng Cloud, Docker Orchestration, Security (Keycloak), DNS.
+- **Trần Vũ Nhật Minh - 523H0055:** Phát triển Backend API, Monitoring (Prometheus/Grafana), Web Frontend UI.
