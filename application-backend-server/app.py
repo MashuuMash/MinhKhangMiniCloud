@@ -144,7 +144,7 @@ COMMON_STYLE = """
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
 
-@app.get("/hello")
+@app.get("/api/hello")
 def hello(): 
     return jsonify(message="Hello from App Server!", members=["Khang", "Minh"])
 
