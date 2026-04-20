@@ -157,6 +157,15 @@ def get_students():
     except Exception as e:
         return jsonify(error=str(e)), 500
 
+@app.route("/api/student", strict_slashes=False)
+def get_students():
+    try:
+        with open("students.json", "r") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
 # Route cho MariaDB CRUD
 @app.route("/api/students-db", methods=["GET"], strict_slashes=False)
 def students_db_page():
