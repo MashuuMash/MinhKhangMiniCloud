@@ -149,14 +149,6 @@ def hello():
     return jsonify(message="Hello from App Server!", members=["Khang", "Minh"])
 
 @app.route("/student", strict_slashes=False)
-def get_students():
-    try:
-        with open("students.json", "r") as f:
-            data = json.load(f)
-        return jsonify(data)
-    except Exception as e:
-        return jsonify(error=str(e)), 500
-
 @app.route("/api/student", strict_slashes=False)
 def get_students():
     try:
