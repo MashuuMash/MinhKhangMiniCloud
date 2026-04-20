@@ -148,7 +148,7 @@ def get_db_connection():
 def hello(): 
     return jsonify(message="Hello from App Server!", members=["Khang", "Minh"])
 
-@app.get("/student")
+@app.route("/student", strict_slashes=False)
 def get_students():
     try:
         with open("students.json", "r") as f:
@@ -158,7 +158,7 @@ def get_students():
         return jsonify(error=str(e)), 500
 
 # Route cho MariaDB CRUD
-@app.route("/api/students-db", methods=["GET"])
+@app.route("/api/students-db", methods=["GET"], strict_slashes=False)
 def students_db_page():
     try:
         conn = get_db_connection()
@@ -308,7 +308,7 @@ def delete_student_db(id):
         return f"Lỗi khi xóa: {str(e)}", 500
 
 # Route cho JSON View
-@app.get("/api/students-json")
+@app.get("/api/students-json", strict_slashes=False)
 def students_json_page():
     try:
         with open("students.json", "r") as f:
