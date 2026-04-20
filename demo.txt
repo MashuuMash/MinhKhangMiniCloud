@@ -1,0 +1,79 @@
+🎙️ KỊCH BẢN VIDEO DEMO QUY TRÌNH NÂNG CAO - MYMINICLOUD
+
+PHẦN 1: MỞ ĐẦU & GIỚI THIỆU HẠ TẦNG (12 CONTAINERS)
+Thao tác:
+Mở sẵn 1 cửa sổ Terminal AWS.
+Gõ (hoặc dán) lệnh sau nhưng chưa nhấn Enter: sudo docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" 
+Khi bắt đầu quay:
+Nhấn Enter để hiện bảng danh sách container.
+Di chuyển con trỏ chuột chỉ vào các tên: api-gateway..., web-frontend..., relational-db..., monitoring....
+Lời thoại:
+"Kính chào thầy và các bạn. Em tên là [Tên của bạn], hôm nay em xin trình bày phần Demo báo cáo dự án cuối kỳ môn Điện toán đám mây. Đề tài của dự án là xây dựng hệ thống mô phỏng hạ tầng MyMiniCloud.
+
+Như mọi người có thể thấy trên màn hình Terminal, hệ thống của em không chỉ dừng lại ở 9 server cơ bản theo yêu cầu mà đã được em tối ưu và mở rộng lên quy mô 12 containers hoạt động đồng bộ. Trong đó, em đã triển khai cụm 3 Node Web Frontend để đáp ứng bài toán High Availability (Tính sẵn sàng cao), cùng với các dịch vụ bảo mật Keycloak, lưu trữ MinIO, DNS nội bộ và hệ thống giám sát toàn diện Prometheus - Grafana."
+
+PHẦN 2: TÍNH NĂNG MỞ RỘNG - WEB & LOAD BALANCING
+Thao tác:
+Chia đôi màn hình: Một bên là Trình duyệt (http://<IP_CỦA_BẠN>), một bên là Terminal.
+Tại Terminal, gõ lệnh: sudo docker logs -f --tail 0 api-gateway-proxy-server
+Khi quay:
+Sang bên Trình duyệt, nhấn F5 liên tục 3-4 lần.
+Chỉ vào màn hình Terminal để thấy các dòng log nhảy ra có tên: web-frontend-server, web-frontend-server1, web-frontend-server2.
+Lời thoại:
+"Đến với phần tính năng mở rộng đầu tiên, em đã triển khai một hệ thống nội dung tĩnh gồm 3 bài viết Blog cá nhân được phục vụ qua Nginx.
+
+Tuy nhiên, điểm đặc biệt nhất nằm ở khả năng chịu tải. Em đã cấu hình API Gateway (Nginx) sử dụng thuật toán Round Robin. Mọi người hãy quan sát log của Gateway: khi em thực hiện tải lại trang liên tục, các yêu cầu truy cập được điều phối luân phiên qua 3 thực thể là Web-Node-Gốc, Node-1 và Node-2. Điều này mô phỏng chính xác cơ chế Elastic Load Balancing của các nền tảng lớn như AWS."
+
+PHẦN 3: TÍNH NĂNG MỞ RỘNG - BACKEND API & DATABASE NÂNG CAO
+Thao tác:
+Tại trình duyệt, mở tab mới truy cập: http://<IP_CỦA_BẠN>/api/student (Để hiện JSON).
+Tiếp tục mở tab mới truy cập: http://<IP_CỦA_BẠN>/api/students-db (Để hiện dữ liệu từ MariaDB).
+Khi quay:
+Click chuột qua lại giữa 2 tab này để thầy cô thấy sự khác biệt.
+Lời thoại:
+"Tiếp theo là phần mở rộng cho lớp ứng dụng và dữ liệu. Thay vì một API chào hỏi đơn giản, em đã xây dựng hệ thống API lấy dữ liệu sinh viên từ 2 nguồn: một là tập tin JSON tĩnh được lưu trữ nội bộ, và hai là truy vấn trực tiếp từ cơ sở dữ liệu studentdb mà em đã thiết kế riêng trong MariaDB. Điều này minh chứng cho khả năng xử lý logic phức tạp và kết nối cơ sở dữ liệu bền vững của Backend."
+
+PHẦN 4: TÍNH NĂNG MỞ RỘNG - IDENTITY & ACCESS MANAGEMENT (SSO)
+Thao tác:
+Truy cập: http://<IP_CỦA_BẠN>:8081 (Cổng 8081 của Keycloak).
+Click "Administration Console".
+Đăng nhập: admin / admin.
+Chỉ vào góc trên bên trái, chỗ chọn Realm, chọn realm_minicloud.
+Ở menu bên trái, click Users -> Click "View all users" để hiện sv01, sv02. 
+Lời thoại:
+"Về phần bảo mật, em đã cấu hình một Identity Provider chuyên nghiệp. Em đã tạo riêng một Realm mang tên dự án, thiết lập Client 'flask-app' và các tài khoản người dùng sv01, sv02. Hệ thống này cho phép triển khai cơ chế Single Sign-On (SSO), giúp bảo vệ các tài nguyên nhạy cảm của Cloud chỉ cho phép người dùng có Token hợp lệ được phép truy cập."
+
+PHẦN 5: TÍNH NĂNG MỞ RỘNG - OBJECT STORAGE & INTERNAL DNS
+Thao tác MinIO:
+Mở tab trình duyệt: http://<IP_CỦA_BẠN>:9001.
+Đăng nhập: minioadmin / minioadmin.
+Menu bên trái chọn Buckets. Chỉ vào 2 bucket profile-pics và documents.
+Click vào profile-pics, chỉ vào file ảnh avatar đã upload.
+
+Thao tác DNS (Terminal):
+Dán lệnh này vào Terminal và nhấn Enter: dig @localhost -p 1053 app-backend.cloud.local +short
+Tiếp tục dán lệnh này: dig @localhost -p 1053 minio.cloud.local +short
+dig @localhost -p 1053 keycloak.cloud.local +short
+Lời thoại:
+"Trong một hạ tầng Cloud, việc quản lý tài nguyên và định danh dịch vụ là rất quan trọng. Em đã thiết lập các Bucket Public trên MinIO để lưu trữ ảnh đại diện và hồ sơ sinh viên, tương tự như dịch vụ Amazon S3.
+
+Bên cạnh đó, hệ thống DNS nội bộ Bind9 đã được em nâng cấp với các bản ghi chuyên biệt. Các container giờ đây có thể tự tìm thấy nhau thông qua các tên miền 'thân thiện' như app-backend.cloud.local thay vì phụ thuộc vào địa chỉ IP động."
+
+PHẦN 6: TÍNH NĂNG MỞ RỘNG - GIÁM SÁT TOÀN DIỆN (OBSERVABILITY)
+Thao tác:
+Truy cập: http://<IP_CỦA_BẠN>:3000.
+Đăng nhập: admin / admin.
+Menu trái chọn Dashboards. Click mở Dashboard "System Health of ". 
+
+Lời thoại:
+"Cuối cùng, để quản lý một hệ thống Cloud phức tạp, em đã xây dựng một Dashboard giám sát tùy chỉnh trên Grafana. Em đã cấu hình Prometheus để thu thập mã metric từ chính Web Server.
+
+Như mọi người thấy trên màn hình, Dashboard 'System Health' này cung cấp cái nhìn thời gian thực về hiệu năng CPU, tình trạng bộ nhớ RAM và băng thông mạng. Đây là công cụ đắc lực giúp quản trị viên đưa ra các quyết định mở rộng hệ thống kịp thời."
+
+PHẦN 7: KẾT LUẬN
+Hành động: Quay lại màn hình Terminal có đủ 12 container. 
+
+Lời thoại:
+"Tổng kết lại, dự án MyMiniCloud của em đã giải quyết thành công các bài toán cốt lõi của điện toán đám mây từ tầng hạ tầng mạng đến tầng ứng dụng và bảo mật. Toàn bộ 10 yêu cầu mở rộng đều đã được triển khai và kiểm thử thành công trên môi trường AWS thực tế.
+
+Em xin cảm ơn thầy và các bạn đã chú ý theo dõi phần demo của em."
